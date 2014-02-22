@@ -1,0 +1,493 @@
+name,score
+3M,68
+Abbott Laboratories,80
+Abercrombie,Fitch
+Accenture,93
+Ace,94
+Adobe Systems,93
+Advanced Micro,Devices
+AES Corporation, The,37
+Aetna,38
+Aflac,82
+Agilent Technologies,78
+Air Products,Chemicals
+Akamai Technologies,79
+Alcoa,91
+Allergan,90
+Allstate,92
+Alpha Natural Resources,NR
+Altera,47
+Altria Group,71
+Amazon.com,NR
+Ameren,75
+American Electric Power,76
+American Express,89
+American International Group,14
+Amgen,75
+Amphenol,NR
+Anadarko Petroleum,70
+Analog Devices,76
+Aon,64
+Apache,64
+Apartment Investment and Management,NR
+Apollo Group,NR
+Apple Inc.,DP
+Applied Materials,86
+Archer Daniels Midland,AQ(L)
+Assurant,36
+AT&T,95
+Autodesk,93
+Automatic Data Processing,71
+AutoNation,DP
+AutoZone,NR
+AvalonBay Communities,NR
+Avery Dennison,59
+Avon Products,52
+Baker Hughes,66
+Ball,71
+Bank of America,93
+Baxter International,77
+BB&T,DP
+Beam,DP
+Becton, Dickinson and Co.,59
+Bed Bath,Beyond
+Bemis Company,60
+Berkshire Hathaway,NR
+Best Buy,96
+Big Lots,15
+Biogen Idec,84
+BlackRock,55
+BMC Software,NR
+BNY Mellon,90
+Boeing,89
+BorgWarner,18
+Boston Properties,NR
+Boston Scientific,37
+Bristol-Myers Squibb,89
+Broadcom,82
+Brown-Forman,93
+C.H. Robinson Worldwide,30
+C.R. Bard,NR
+CA Technologies,84
+Cablevision Systems,NR
+Cabot Oil,Gas
+Cameron International,DP
+Campbell Soup,78
+Capital One Financial,67
+Cardinal Health,75
+Carefusion Corp,NR
+CarMax,NR
+Carnival,84
+Caterpillar,DP
+CBRE Group,64
+CBS,33
+Celgene,54
+CenterPoint Energy,23
+CenturyLink,61
+Cerner,NR
+CF Industries Holdings,NR
+Charles Schwab,50
+Chesapeake Energy,DP
+Chevron,88
+Chipotle Mexican Grill,NR
+Chubb Corporation, The,58
+Cigna,52
+Cincinnati Financial,54
+Cintas,DP
+Cisco Systems,96
+Citigroup,80
+Citrix Systems,NR
+Cliffs Natural Resources,37
+Clorox,87
+CME Group,NR
+CMS Energy,77
+Coach,IN
+Coca-Cola Company,96
+Coca-Cola Enterprises,92
+Cognizant Technology Solutions,68
+Colgate-Palmolive,91
+Comcast,DP
+Comerica,91
+Computer Sciences,Corporation
+Compuware,91
+ConAgra Foods,93
+ConocoPhillips,81
+CONSOL Energy,46
+Consolidated Edison,92
+Constellation Brands,72
+Constellation Energy Group,86
+Cooper Industries,NR
+Corning,42
+Costco Wholesale,39
+Coventry Health Care,NR
+Covidien,51
+CSX,95
+Cummins,87
+CVS Caremark,82
+D.R. Horton,16
+Danaher,16
+Darden Restaurants,80
+DaVita,NR
+Dean Foods,88
+Deere,Company
+Dell,81
+Denbury Resources,NR
+DENTSPLY International,DP
+Devon Energy,76
+DeVry,NR
+Diamond Offshore DrillingEGY,NR
+DIRECTV,91
+Discover Financial Services,DP
+Discovery Communications,NR
+Dollar Tree,NR
+Dominion Resources,78
+Dover,79
+Dow Chemical,91
+Dr Pepper Snapple Group,60
+DTE Energy,68
+Duke Energy,59
+Dun,Bradstreet
+E*TRADE Financial,NR
+E.I. du Pont de Nemours,94
+Eastman Chemical,36
+Eaton,94
+eBay,72
+Ecolab,93
+Edison International,DP
+Edwards Lifesciences Corp,DP
+El Paso4,DP
+Electronic Arts,NR
+Eli Lilly,65
+EMC,91
+Emerson Electric,9
+Entergy,94
+EOG Resources,DP
+EQT Corporation,NR
+Equifax,NR
+Equity Residential,NR
+Est?e Lauder,85
+Exelon,94
+Expedia,62
+Expeditors International of Washington,67
+Express Scripts Holding,48
+Exxon Mobil,75
+F5 Networks,IN
+Family Dollar Stores,62
+Fastenal,NR
+Federated Investors,NR
+FedEx Corporation,70
+Fidelity National Information Services,DP
+Fifth Third Bancorp,84
+First Horizon National,12
+First Solar,80
+FirstEnergy,DP
+Fiserv,11
+FLIR Systems,DP
+Flowserve,IN
+Fluor,7
+FMC Corp,NR
+FMC Technologies,NR
+Ford Motor,72
+Forest Laboratories,49
+Franklin Resources,79
+Freeport-McMoRan Copper,Gold
+GameStop,NR
+Gannett,NR
+Gap,78
+General Dynamics,IN
+General Electric,73
+General Mills,68
+Genuine Parts,NR
+Genworth Financial,59
+Gilead Sciences,96
+Goldman Sachs,95
+Goodrich,NR
+Goodyear Tire,Rubber
+Google,95
+H&R Block,18
+H.J. Heinz,89
+Halliburton,72
+Harley-Davidson,IN
+Harman International Industries,NR
+Harris,35
+Hartford Financial Services Group,92
+Hasbro,80
+HCP,77
+Health Care,FIN
+Helmerich,Payne
+Hershey Company, The,80
+Hess,97
+Hewlett-Packard,92
+Hillshire Brands Company,67
+Home Depot,95
+Honeywell International,22
+Hormel Foods,56
+Hospira,47
+Host Hotels,Resorts
+Hudson City Bancorp,DP
+Humana,80
+Huntington Bancshares,53
+Illinois Tool Works,76
+Ingersoll-Rand,76
+Integrys Energy Group,39
+Intel,88
+IntercontinentalExchange,NR
+International Business Machines,IT
+International Flavors,Fragrances
+International Game TechnologyCD,NR
+International Paper,77
+Interpublic Group of Companies,17
+Intuit,73
+Intuitive Surgical,NR
+Invesco,82
+Iron Mountain,DP
+J.M. Smucker Company,88
+Jabil Circuit,86
+Jacobs Engineering Group,58
+JCPenney,NR
+JDS Uniphase,74
+Johnson,Johnson
+Johnson Controls,92
+Joy Global,NR
+JPMorgan Chase,89
+Juniper Networks,80
+Kellogg Company,81
+KeyCorp,89
+Kimberly-Clark,74
+Kimco Realty,48
+KLA-Tencor,AQ(L)
+Kohl’s,76
+Kraft Foods,84
+Kroger,52
+L-3 Communications Holdings,0
+Laboratory Corporation of America,HC
+Legg Mason,85
+Leggett,Platt
+Lennar,DP
+Leucadia National,NR
+Lexmark International,65
+Life Technologies,80
+Limited Brands,79
+Lincoln National,IN
+Linear Technology,NR
+Lockheed Martin,93
+Loews,DP
+Lorillard,DP
+Lowe’s,83
+LSI,86
+M&T Bank,71
+Macy’s,19
+Marathon Oil,55
+Marathon Petroleum,DP
+Marriott International,82
+Marsh,McLennan
+Masco,63
+MasterCard,39
+Mattel,46
+McCormik,Company
+McDonald’s,63
+McGraw-Hill,90
+McKesson,NR
+Mead Johnson Nutrition,53
+MeadWestvaco,93
+Medtronic,49
+Merck,Co.
+MetLife,84
+Metro,Communications
+Microchip Technology,75
+Micron Technology,28
+Microsoft,99
+Molex,59
+Molson Coors Brewing,89
+Monsanto,40
+Moody’s,25
+Morgan Stanley,92
+Mosaic Company,90
+Motorola Mobility,65
+Motorola Solutions,79
+Murphy Oil,DP
+Mylan,NR
+Nabors Industries,NR
+NASDAQ,Group
+National Oilwell Varco,NR
+NetApp,70
+Netflix,NR
+Newell Rubbermaid,43
+Newfield Exploration,NR
+Newmont Mining,92
+News Corporation,95
+NextEra Energy,DP
+NIKE,69
+NiSource,DP
+Noble,NR
+Noble Energy,75
+Nordstrom,91
+Norfolk Southern,88
+Northeast Utilities,85
+Northern Trust,69
+Northrop Grumman,90
+Novellus Systems,DP
+NRG Energy,89
+Nucor,NR
+Nvidia,82
+Nyse Euronext,96
+Occidental Petroleum,60
+Omnicom Group,55
+Oneok,NR
+Oracle,61
+O’Reilly Automotive,DP
+Owens-Illinois,30
+PACCAR,NR
+Pall,68
+Parker-Hannifin,74
+Patterson Companies,42
+Paychex,NR
+Peabody Energy,NR
+People’s United Financial,NR
+Pepco Holdings,97
+PepsiCo,94
+PerkinElmer,53
+Perrigo,DP
+Pfizer,87
+PG&E,93
+Philip Morris International,91
+Pinnacle West Capital,41
+Pioneer Natural Resources,NR
+Pitney Bowes,72
+Plum Creek Timber,89
+PNC Financial Services Group,84
+Polo Ralph Lauren,DP
+PPG Industries,64
+PPL,DP
+Praxair,95
+Precision Castparts,NR
+Priceline.com,NR
+Principal Financial Group,84
+Procter,Gamble
+Progress Energy,DP
+Progressive,DP
+Prologis,75
+Prudential Financial,47
+Public Service Enterprise Group,DP
+Public Storage,NR
+Pulte Homes,NR
+QEP Resources,DP
+Qualcomm,59
+Quanta Services,DP
+Quest Diagnostics,56
+Range Resources,NR
+Raytheon,90
+Red Hat,NR
+Regions Financial,DP
+Republic Services,NR
+Reynolds American,63
+Robert Half International,9
+Rockwell Automation,61
+Rockwell Collins,68
+Roper Industries,NR
+Ross Stores,IN
+Rowan Companies,29
+RR Donnelley,Sons
+Ryder System,81
+Safeway,59
+SAIC,73
+salesforce.com,94
+SanDisk,90
+SCANA Corporation,NR
+Schlumberger,92
+Scripps Networks Interactive,15
+Sealed Air,69
+Sears Holdings,62
+Sempra Energy,97
+Sherwin-Williams,71
+Sigma-Aldrich,95
+Simon Property Group,92
+SLM,NR
+Snap-on,48
+Southern Company, The,48
+Southwest Airlines,54
+Southwestern Energy,NR
+Spectra Energy,95
+Sprint Nextel,97
+St. Jude Medical,NR
+Stanley Black,Decker
+Staples,64
+Starbucks,81
+Starwood Hotels,Resorts
+State Street,71
+Stericycle,NR
+Stryker,DP
+Sunoco,DP
+SunTrust Banks,35
+SUPERVALU,92
+Symantec,87
+Sysco,NR
+T. Rowe Price,76
+Target,87
+TE Connectivity,53
+TECO Energy,DP
+Tenet Healthcare,NR
+Teradata,38
+Teradyne,67
+Tesoro,DP
+Texas Instruments,61
+Textron,49
+Thermo Fisher Scientific,69
+Tiffany,Co.
+Time Warner,48
+Time Warner Cable,DP
+Titanium Metals,NR
+TJX Companies,97
+Torchmark,NR
+Total System Services,20
+Travelers Companies,68
+Tripadvisor,NR
+Tyco International,AQ(L)
+Tyson Foods,DP
+U.S. Bancorp,77
+Union Pacific,87
+United States Steel,75
+United Technologies Corporation,70
+UnitedHealth Group,66
+Unum Group,87
+Ups,99
+Urban Outfitters,NR
+Valero Energy,NR
+Varian Medical Systems,81
+Ventas,AQ(L)
+Verisign,NR
+Verizon Communications,66
+VF Corp,86
+Viacom,21
+Visa,51
+Vornado Realty Trust,DP
+Vulcan Materials,NR
+W.W. Grainger,73
+Walgreen Co.,79
+Wal-Mart Stores,86
+Walt Disney Company,53
+Washington Post,DP
+Waste Management,84
+Waters,63
+Watson Pharmaceuticals,83
+WellPoint,69
+Wells Fargo,Co.
+Western Digital,52
+Western Union,IN
+Weyerhaeuser,71
+Whirlpool,57
+Whole Foods Market,60
+Williams Companies,DP
+Windstream,7
+Wisconsin Energy,53
+Wyndham Worldwide,91
+Wynn Resorts,DP
+Xcel Energy,93
+Xerox,76
+Xilinx,53
+XL Capital,45
+Xylem,46
+Yahoo!,59
+Yum! Brands,85
+Zimmer Holdings,57
+Zions Bancorporation ,NR
