@@ -2,4 +2,4 @@ App to allow potential investors to look at both financial info and social impac
 
 **Very** messy code, as it was for a hackathon.
 
-Hosted online at [socialimpact.harryricards.com](http://socialimpact.harryrickards.com). [Example API endpoint](http://socialimpact.harryrickards.com/companies/apple).
+Hosted online at [socialimpact.harryricards.com](http://socialimpact.harryrickards.com). [Example API endpoint](http://socialimpact.harryrickards.com/api/companies/apple).

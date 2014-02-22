@@ -1,3 +1,3 @@
 require "./api.rb"
 
-run SocialImpact::API
+run Rack::URLMap.new "/api" => SocialImpact::API.new
