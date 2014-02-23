@@ -15,7 +15,7 @@ SOCIAL_OFFSETS = {
   best_regarded: 0,
   wegreen:  2.0,
   women_board_members: 50,
-  csrhub_overall: 50,
+  csrhub_overall: 30,
   csrhub_community: 50,
   csrhub_employees: 50,
   csrhub_environment: 50,
@@ -31,24 +31,24 @@ SOCIAL_OFFSETS = {
   vigeo: 0.2
 }
 SOCIAL_WEIGHTS = {
-  most_reputable: 1,
-  best_regarded: 1,
-  wegreen:  1,
-  women_board_members: 1,
+  most_reputable: 0,
+  best_regarded: 0,
+  wegreen:  0,
+  women_board_members: 0,
   csrhub_overall: 1,
-  csrhub_community: 1,
-  csrhub_employees: 1,
-  csrhub_environment: 1,
-  csrhub_governance: 1,
-  glassdoor_rating: 1,
-  ceo_approval: 1,
-  recommend_to_a_friend: 1,
-  glassdoor_culture_and_values: 1,
-  glassdoor_work_life_balance: 1,
-  glassdoor_senior_management: 1,
-  glassdoor_comp_and_benefits: 1,
-  glassdoor_career_opportunities: 1,
-  vigeo: 1
+  csrhub_community: 0,
+  csrhub_employees: 0,
+  csrhub_environment: 0,
+  csrhub_governance: 0,
+  glassdoor_rating: 10,
+  ceo_approval: 0,
+  recommend_to_a_friend: 0,
+  glassdoor_culture_and_values: 0,
+  glassdoor_work_life_balance: 0,
+  glassdoor_senior_management: 0,
+  glassdoor_comp_and_benefits: 0,
+  glassdoor_career_opportunities: 0,
+  vigeo: 0
 }
 
 # CSRHUB_KEYS = %i{carbon_disclosure un_global_compact csr_wegreen}
@@ -221,6 +221,8 @@ class SocialCompany
 
     scores << ((@info[:vigeo][:on_list] ? 1 : 0)-SOCIAL_OFFSETS[:vigeo])*SOCIAL_WEIGHTS[:vigeo] unless @info[:vigeo].empty?
 
+    scores.reject!(&:nil?)
+    scores.reject!(&:zero?)
     score = scores.reduce(:+)/scores.length
     @info[:social_impact_score] = score.signif(2)
   end
