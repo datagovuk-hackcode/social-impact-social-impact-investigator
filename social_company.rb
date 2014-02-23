@@ -6,6 +6,8 @@ require_relative "./cache.rb"
 require_relative "./libs.rb"
 require_relative "./data/glassdoor/reviews.rb"
 require "redis"
+require "mongo"
+include Mongo
 
 # TODO Set these values, or ideally let the user set them
 SOCIAL_OFFSETS = {

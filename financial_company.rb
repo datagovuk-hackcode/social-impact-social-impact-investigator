@@ -148,13 +148,17 @@ class FinancialCompany
 
   def overall_score
     if @info[:stocks].empty?
-      @info[:financial_score] = -1
+      @info[:financial_score] = 0
     else
       scores = []
       scores << (@info[:stocks][:dividend_per_share]-FINANCIAL_OFFSETS[:dividend])*FINANCIAL_WEIGHTS[:dividend] unless @info[:stocks][:dividend_per_share].zero?
       scores << (@info[:stocks][:close]-FINANCIAL_OFFSETS[:close])*FINANCIAL_WEIGHTS[:close] unless @info[:stocks][:close].zero?
+      if scores.empty?
+        @info[:financial_score] = 0
+      else
+        score = scores.reduce(:+)/scores.length
+        @info[:financial_score] = score.signif(2)
+      end
     end
-    score = scores.reduce(:+)/scores.length
-    @info[:financial_score] = score.signif(2)
   end
 end
