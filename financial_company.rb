@@ -12,7 +12,7 @@ require "json"
 DUEDIL_KEY = "ct78nurp9tbeb7b9zxqmr627"
 BASE_DUEDIL_API = "api.duedil.com/sandbox/v2/"
 
-STOCK_FIELDS = %i{average_daily_volume bid dividend_per_share earnings_per_share low_52_weeks high_52_weeks close symbol dividend_yield stock_exchange}
+STOCK_FIELDS = %i{average_daily_volume bid dividend_per_share earnings_per_share low_52_weeks high_52_weeks close symbol dividend_yield stock_exchange market_capitalization}
 STOCK_FIELDS_HASH = Digest::MD5.hexdigest(STOCK_FIELDS.join)
 STOCK_NUM_DAYS = 365
 STOCK_PERIOD = :monthly

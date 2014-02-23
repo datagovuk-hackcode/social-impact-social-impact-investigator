@@ -151,7 +151,6 @@ Company info
        "financial_score":14.0
     }
 
-    http://socialimpact.harryrickards.com/api/companies/apple
 
 Categories list
 
