@@ -66,6 +66,7 @@ class FinancialCompany
       @info[:stocks] = {}
     else
       get_yahoo
+      stocks_chart
     end
 
     overall_score
@@ -160,5 +161,9 @@ class FinancialCompany
         @info[:financial_score] = score.signif(2)
       end
     end
+  end
+
+  def stocks_chart
+    @info[:stocks][:stocks_chart] = "http://chart.finance.yahoo.com/z?s=#{@ticker}&t=5y&q=&l=&z=l&a=v&p=s&lang=en-US&region=US"
   end
 end
