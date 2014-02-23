@@ -3,8 +3,51 @@ include Mongo
 require "nokogiri"
 require "open-uri"
 require_relative "./cache.rb"
+require_relative "./libs.rb"
 require_relative "./data/glassdoor/reviews.rb"
 require "redis"
+
+# TODO Set these values, or ideally let the user set them
+SOCIAL_OFFSETS = {
+  most_reputable: 0,
+  best_regarded: 0,
+  wegreen:  2.0,
+  women_board_members: 50,
+  csrhub_overall: 50,
+  csrhub_community: 50,
+  csrhub_employees: 50,
+  csrhub_environment: 50,
+  csrhub_governance: 50,
+  glassdoor_rating: 3.0,
+  ceo_approval: 70,
+  recommend_to_a_friend: 80,
+  glassdoor_culture_and_values: 3.0,
+  glassdoor_work_life_balance: 3.0,
+  glassdoor_senior_management: 3.0,
+  glassdoor_comp_and_benefits: 3.0,
+  glassdoor_career_opportunities: 3.0,
+  vigeo: 0.2
+}
+SOCIAL_WEIGHTS = {
+  most_reputable: 1,
+  best_regarded: 1,
+  wegreen:  1,
+  women_board_members: 1,
+  csrhub_overall: 1,
+  csrhub_community: 1,
+  csrhub_employees: 1,
+  csrhub_environment: 1,
+  csrhub_governance: 1,
+  glassdoor_rating: 1,
+  ceo_approval: 1,
+  recommend_to_a_friend: 1,
+  glassdoor_culture_and_values: 1,
+  glassdoor_work_life_balance: 1,
+  glassdoor_senior_management: 1,
+  glassdoor_comp_and_benefits: 1,
+  glassdoor_career_opportunities: 1,
+  vigeo: 1
+}
 
 # CSRHUB_KEYS = %i{carbon_disclosure un_global_compact csr_wegreen}
 
@@ -27,6 +70,11 @@ class String
   end
 end
 
+def strip_percentage(str)
+  str[0...str.length-1].to_f
+end
+
+
 class SocialCompany
   attr_accessor :info
 
@@ -42,6 +90,7 @@ class SocialCompany
     glassdoor
     vigeo
     cdp
+    overall_score
   end
 
   def most_reputable
@@ -131,6 +180,47 @@ class SocialCompany
       JSON.generate Glassdoor.scrape(@name)
     end
     @info[:glassdoor] = JSON.parse glassdoor_data, symbolize_names: true
+  end
+
+  def overall_score
+    scores = []
+
+    %i{most_reputable best_regarded}.each do |key|
+      scores << (@info[key][:score]-SOCIAL_OFFSETS[key])*SOCIAL_WEIGHTS[key] unless @info[key].empty?
+    end
+
+    scores << (@info[:wegreen][:score].to_f-SOCIAL_OFFSETS[:wegreen])*SOCIAL_WEIGHTS[:wegreen] unless @info[:wegreen].empty?
+
+    unless @info[:women_board_members].empty?
+      percentage = strip_percentage(@info[:women_board_members][:percentage_of_women])
+      scores << (percentage-SOCIAL_OFFSETS[:women_board_members])*SOCIAL_WEIGHTS[:women_board_members]
+    end
+
+    unless @info[:csrhub].empty?
+      ratings = @info[:csrhub][:ratings][:average]
+      ratings.each do |key, rating|
+        key = "csrhub_#{key}"
+        scores << (rating-SOCIAL_OFFSETS[key.to_sym])*SOCIAL_WEIGHTS[key.to_sym]
+      end
+    end
+
+    unless @info[:glassdoor].empty?
+      gd = @info[:glassdoor]
+      scores << (gd[:rating]-SOCIAL_OFFSETS[:glassdoor_rating])*SOCIAL_WEIGHTS[:glassdoor_rating]
+      scores << (strip_percentage(gd[:ceo_approval])-SOCIAL_OFFSETS[:ceo_approval])*SOCIAL_WEIGHTS[:ceo_approval]
+      scores << (strip_percentage(gd[:recommend_to_a_friend])-SOCIAL_OFFSETS[:recommend_to_a_friend])*SOCIAL_WEIGHTS[:recommend_to_a_friend]
+
+      ratings = gd[:ratings]
+      ratings.each do |key, rating|
+        key = "glassdoor_#{key}"
+        scores << (rating-SOCIAL_OFFSETS[key.to_sym])*SOCIAL_WEIGHTS[key.to_sym]
+      end
+    end
+
+    scores << ((@info[:vigeo][:on_list] ? 1 : 0)-SOCIAL_OFFSETS[:vigeo])*SOCIAL_WEIGHTS[:vigeo] unless @info[:vigeo].empty?
+
+    score = scores.reduce(:+)/scores.length
+    @info[:social_impact_score] = score.signif(2)
   end
 
   private

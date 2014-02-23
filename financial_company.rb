@@ -2,6 +2,7 @@ require "rubygems"
 require "httparty"
 require "redis"
 require_relative "./cache.rb"
+require_relative "./libs.rb"
 require "yahoo_finance"
 require "net/http"
 require "uri"
@@ -15,6 +16,15 @@ STOCK_FIELDS = %i{average_daily_volume bid dividend_per_share earnings_per_share
 STOCK_FIELDS_HASH = Digest::MD5.hexdigest(STOCK_FIELDS.join)
 STOCK_NUM_DAYS = 365
 STOCK_PERIOD = :monthly
+
+FINANCIAL_OFFSETS = {
+  dividend: 0,
+  close: 200
+}
+FINANCIAL_WEIGHTS = {
+  dividend: 1,
+  close: 0.05
+}
 
 
 REDIS = Redis.new(
@@ -57,6 +67,8 @@ class FinancialCompany
     else
       get_yahoo
     end
+
+    overall_score
   end
 
   def get_duedil_id
@@ -131,6 +143,18 @@ class FinancialCompany
 
       JSON.generate(data)
     end
-    @info[:stocks] = JSON.parse stocks
+    @info[:stocks] = JSON.parse stocks, symbolize_names: true
+  end
+
+  def overall_score
+    if @info[:stocks].empty?
+      @info[:financial_score] = -1
+    else
+      scores = []
+      scores << (@info[:stocks][:dividend_per_share]-FINANCIAL_OFFSETS[:dividend])*FINANCIAL_WEIGHTS[:dividend] unless @info[:stocks][:dividend_per_share].zero?
+      scores << (@info[:stocks][:close]-FINANCIAL_OFFSETS[:close])*FINANCIAL_WEIGHTS[:close] unless @info[:stocks][:close].zero?
+    end
+    score = scores.reduce(:+)/scores.length
+    @info[:financial_score] = score.signif(2)
   end
 end
