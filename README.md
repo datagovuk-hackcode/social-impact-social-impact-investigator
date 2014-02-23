@@ -6,6 +6,8 @@ App to allow potential investors to look at both financial info and social impac
 
 Hosted online at [socialimpact.harryricards.com](http://socialimpact.harryrickards.com). [Example API endpoint](http://socialimpact.harryrickards.com/api/companies/apple).
 
+The overall scores `social_impact_score' and `financial_score' are calculated from various bits of the social impact and financial data. Change the relative weightings by changing `SOCIAL_OFFSETS' and 'SOCIAL_WEIGHTS' in `social_company.rb' or `FINANCIAL_OFFSETS' and `FINANCIAL_WEIGHTS' in `financial_company.rb'.
+
 ### Data
 Categories data from [20% by 2020 Women on Boards Company Directory](http://www.2020wob.com/company-directory).
 
