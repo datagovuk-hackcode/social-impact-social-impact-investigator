@@ -13,7 +13,7 @@ include Mongo
 SOCIAL_OFFSETS = {
   most_reputable: 0,
   best_regarded: 0,
-  wegreen:  2.0,
+  wegreen:  3.5,
   women_board_members: 50,
   csrhub_overall: 30,
   csrhub_community: 50,
@@ -33,14 +33,14 @@ SOCIAL_OFFSETS = {
 SOCIAL_WEIGHTS = {
   most_reputable: 0,
   best_regarded: 0,
-  wegreen:  0,
+  wegreen:  5,
   women_board_members: 0,
   csrhub_overall: 1,
   csrhub_community: 0,
   csrhub_employees: 0,
   csrhub_environment: 0,
   csrhub_governance: 0,
-  glassdoor_rating: 10,
+  glassdoor_rating: 5,
   ceo_approval: 0,
   recommend_to_a_friend: 0,
   glassdoor_culture_and_values: 0,
@@ -191,7 +191,7 @@ class SocialCompany
       scores << (@info[key][:score]-SOCIAL_OFFSETS[key])*SOCIAL_WEIGHTS[key] unless @info[key].empty?
     end
 
-    scores << (@info[:wegreen][:score].to_f-SOCIAL_OFFSETS[:wegreen])*SOCIAL_WEIGHTS[:wegreen] unless @info[:wegreen].empty?
+    scores << (5-@info[:wegreen][:score].to_f-SOCIAL_OFFSETS[:wegreen])*SOCIAL_WEIGHTS[:wegreen] unless @info[:wegreen].empty?
 
     unless @info[:women_board_members].empty?
       percentage = strip_percentage(@info[:women_board_members][:percentage_of_women])
@@ -223,7 +223,7 @@ class SocialCompany
 
     scores.reject!(&:nil?)
     scores.reject!(&:zero?)
-    score = scores.reduce(:+)/scores.length*5
+    score = scores.reduce(:+)/scores.length*10
     @info[:social_impact_score] = score.signif(2)
   end
 
