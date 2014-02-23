@@ -19,7 +19,7 @@ module SocialImpact
         get do
           name = params[:name]
           name.gsub! /[^a-zA-Z]/, " "
-          Company.info name
+          Company.info name, params[:name]
         end
       end
     end
