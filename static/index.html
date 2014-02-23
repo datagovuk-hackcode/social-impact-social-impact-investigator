@@ -6,6 +6,11 @@
 		</script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js">
 		</script>
+		<script id="categories-template" type="text/x-handlebars-template">
+      {{#each categories}}
+       <h4 class="categoryLink">{{ name }}</h4>
+      {{/each}}
+    </script>
 		<script id="results-template" type="text/x-handlebars-template">
 			<img src="{{stocks.stocks_chart}}">
 			<div id="info"> {{csrhub.description}} </div>
@@ -44,8 +49,13 @@
         </form>
 			</div>
 			<p id="under_search">
-			Or search by category...
+      Or <a href="#" id="searchByCategory">search by category...</a>
 			</p>
+      <div id="categoriesContainer">
+        <select id="categories">
+          <option>Select...</option>
+        </select>
+      </div>
 		</div>
 		<div id="results">
 		</div>

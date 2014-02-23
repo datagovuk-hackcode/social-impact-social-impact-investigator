@@ -20,6 +20,7 @@ class Category
   def companies
     names = COLL.find({"sector"=>@name}).map { |r| r["title"] }.uniq.reject(&:nil?).reject(&:empty?)
     names.map do |name|
+      name.gsub! /,? Inc\.?$/, ""
       {
         name: name,
         url: "/api/companies/#{URI.escape name.gsub(/[^a-zA-Z ]/, "")}"
