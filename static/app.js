@@ -28,6 +28,10 @@ $(function(){
   $(document).on("click", ".categoryLink", function(event) {
     loadData($(event.target).text());
   });
+
+  $(".header").on("click", function() {
+    location.reload();
+  });
 });
 
 function loadCategoryResults(name) {

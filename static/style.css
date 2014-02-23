@@ -35,3 +35,7 @@
 #disqus_thread {
   margin-bottom: 2em;
 }
+
+#footer a {
+  color: black;
+}
