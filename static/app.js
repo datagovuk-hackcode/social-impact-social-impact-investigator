@@ -2,6 +2,8 @@ $(function(){
 	resizePage();
 	$(window).resize(resizePage);
 
+  textFit($('#header'), {maxFontSize:32})
+
   $("#searchByCategory").on("click", function() {
     loadCategories();
     $("#categories").show();
