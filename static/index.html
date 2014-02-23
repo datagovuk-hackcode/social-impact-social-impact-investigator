@@ -12,12 +12,12 @@
       {{/each}}
     </script>
 		<script id="results-template" type="text/x-handlebars-template">
-			<img src="{{stocks.stocks_chart}}">
+			<img src="{{stocks.stocks_chart}}" class="stocksChart">
 			<div id="info"> {{csrhub.description}} </div>
 			<div id="both">
 				<div id="financial">
 					<h2>Financial Data Score: {{financial_score}} </h2> 
-					<h3>Share price (in USD): {{stocks.close}} </h3>
+					<h3>Share price (USD): {{stocks.close}} </h3>
 					<h3>Dividend Yield: {{stocks.dividend_yield}} </h3>
 					<h3>Lowest in last year: {{stocks.low_52_weeks}} </h3>
 					<h3>Highest in last year: {{stocks.high_52_weeks}} </h3>
@@ -25,7 +25,7 @@
 				<div id="social"> 
 					<h2>Social Data Score: {{social_impact_score}} </h2>
 					<h3>Wegreen Score: {{wegreen.score}} </h3>
-					<h3>Percentage of Women Board Members: {{women_board_members.percentage_of_women}} </h3>
+					<h3>Women Board Members: {{women_board_members.percentage_of_women}} </h3>
 					<h3>Employee rating: {{glassdoor.rating}}</h3>
 					<h3>CSRhub rating: {{csrhub.ratings.average.overall}}</h3>
 				</div>
@@ -33,14 +33,14 @@
 		</script>
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<title>
-		Hack for Social Impact
+      Social Impact Investigator
 		</title>
 		<script src="app.js">
 		</script>
 	</head>
 	<body>
 		<div class="header">
-			Hello world
+      <h1>Social Impact Investigator</h1>
 		</div>
 		<div id="search-all">
 			<div class="search">
@@ -60,6 +60,7 @@
 		<div id="results">
 		</div>
 		<div id="footer">
+      &copy; 2013 Harry Rickards and Vesko Vankov. BSD licensed. See individual datasets for data licensed.
 		</div>
 	</body>
 </html>

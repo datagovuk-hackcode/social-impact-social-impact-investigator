@@ -56,8 +56,8 @@ function resizePage() {
 	$("#results").height(mainHeight);
 	var bothWidth = $("#both").width() / 2 - 8;
 	console.log(bothWidth);
-	$("#social").width(bothWidth);
-	$("#financial").width(bothWidth);
+  // $("#social").width(bothWidth);
+  // $("#financial").width(bothWidth);
 }
 
 function loadCategories() {
