@@ -157,7 +157,7 @@ class FinancialCompany
       if scores.empty?
         @info[:financial_score] = 0
       else
-        score = scores.reduce(:+)/scores.length
+        score = scores.reduce(:+)/scores.length*5
         @info[:financial_score] = score.signif(2)
       end
     end

@@ -223,7 +223,7 @@ class SocialCompany
 
     scores.reject!(&:nil?)
     scores.reject!(&:zero?)
-    score = scores.reduce(:+)/scores.length
+    score = scores.reduce(:+)/scores.length*5
     @info[:social_impact_score] = score.signif(2)
   end
 
