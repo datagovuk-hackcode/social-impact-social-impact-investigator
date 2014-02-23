@@ -8,6 +8,12 @@ Hosted online at [socialimpact.harryricards.com](http://socialimpact.harryrickar
 
 The overall scores `social_impact_score' and `financial_score' are calculated from various bits of the social impact and financial data. Change the relative weightings by changing `SOCIAL_OFFSETS' and 'SOCIAL_WEIGHTS' in `social_company.rb' or `FINANCIAL_OFFSETS' and `FINANCIAL_WEIGHTS' in `financial_company.rb'.
 
+### Installation
+
+* Setup gems with `bundle install'.
+* Import data with `cd data && ruby import.rb'.
+* Run using a rack server on `config.ru'
+
 ### Data
 Categories data from [20% by 2020 Women on Boards Company Directory](http://www.2020wob.com/company-directory).
 
