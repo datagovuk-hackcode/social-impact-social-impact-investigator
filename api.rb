@@ -16,17 +16,39 @@ module SocialImpact
     end
 
     resource :companies do
+      desc "See possible search filters."
+      get '/search' do
+        CSRHubCompany.search_filters
+      end
+
+      desc "See possible search operators."
+      get '/search/:filter' do
+        CSRHubCompany.search_operators params[:filter]
+      end
+
+      desc "Search for companies."
+      get '/search/:search_filter', requirements: {search_filter: /.*/} do
+        filter_string = params[:search_filter].split("/")
+        filters = []
+        filter_string.each_slice(3) do |filter, operator, value|
+          filters << {
+            filter: filter,
+            operator: operator,
+            value: value
+          }
+        end
+        CSRHubCompany.search filters
+      end
+
       desc "Return info on a company."
       params do
         requires :name, type: String, desc: "Company Name"
       end
-      route_param :name do
-        get do
-          name = params[:name]
-          name.gsub! /[^a-zA-Z]/, " "
-          company = CSRHubCompany.new name: name
-          company.resp
-        end
+      get '/:name', requirements: { name: /.*/ } do
+        name = params[:name]
+        # name.gsub! /[^a-zA-Z]/, " "
+        company = CSRHubCompany.new name: name
+        company.resp
       end
     end
 

@@ -21,7 +21,8 @@ class YahooCompany
     url = "http://d.yimg.com/autoc.finance.yahoo.com/autoc?query=#{URI.escape @name}&callback=YAHOO.Finance.SymbolSuggest.ssCallback"
     jsonp = open(url).read
     data = JSON.parse jsonp[/{.+}/]
-    @ticker = data["ResultSet"]["Result"].first["symbol"]
+    result = data["ResultSet"]["Result"]
+    @ticker = result.first["symbol"] unless result.nil? or result.empty?
   end
 
   def get_stocks

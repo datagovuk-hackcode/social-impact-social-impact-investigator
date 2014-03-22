@@ -14,3 +14,11 @@ carbon_disclosure:
   values:
     score: Carbon disclosure score
     band: Carbon performance band
+
+climate_counts:
+  name: Climate Counts 2012
+  values:
+    policy_stance: Policy Stance
+    reduce: Reduce
+    report: Report
+    review: Report
