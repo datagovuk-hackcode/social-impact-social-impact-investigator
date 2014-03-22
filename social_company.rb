@@ -139,8 +139,11 @@ class SocialCompany
   def csrhub
     csrhub_data = REDIS.cache "csrhub_data_#{@name}" do
       begin
-        url = "http://www.csrhub.com/CSR_and_sustainability_information/#{@name.gsub " ", ""}/"
-        page = Nokogiri::HTML open(url)
+        search_url = "http://www.csrhub.com/search/name/#{@name.gsub " ", ""}/"
+        search_results = Nokogiri::HTML open(search_url)
+        company_link = "http://www.csrhub.com/" + search_results.xpath("//td[@class='company_name']/a").attr("href")
+
+        page = Nokogiri::HTML open(company_link)
         data = {}
 
         info = page.xpath("//div[@class='marg']")
