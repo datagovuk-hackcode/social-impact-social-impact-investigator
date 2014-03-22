@@ -25,12 +25,11 @@ module SocialImpact
             return nil
           elsif datai.to_s == data
             return datai
-          elsif dataf != 0 or data == ("0." + "0"*(data.length<2 ? 0 : data.length-2))
+          elsif (Float(data) rescue false)
             return dataf
-          # TODO Ugly!!
-          elsif data =~ /(N\/A|[\d+\-%]*) +- +(N\/A|[\d+\-%\.]*)/i
-            groups = data.match /(N\/A|[\d+\-%]*) +- +(N\/A|[\d+\-%\.]*)/i
-            return format_output [groups[1], groups[2]]
+          # elsif data =~ /(N\/A|[\d+\-%]*) +- +(N\/A|[\d+\-%\.]*)/i
+            # groups = data.match /(N\/A|[\d+\-%]*) +- +(N\/A|[\d+\-%\.]*)/i
+            # return format_output [groups[1], groups[2]]
           elsif data[0] == "+"
             num = format_output(data[1..-1])
             if num.is_a? String
