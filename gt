@@ -1,54 +1,0 @@
-[1mdiff --git a/static/app.js b/static/app.js[m
-[1mindex 422d44e..29233dd 100644[m
-[1m--- a/static/app.js[m
-[1m+++ b/static/app.js[m
-[36m@@ -2,6 +2,8 @@[m [m$(function(){[m
- 	resizePage();[m
- 	$(window).resize(resizePage);[m
- [m
-[32m+[m[32m  textFit($('#header'), {maxFontSize:32})[m[41m[m
-[32m+[m[41m[m
-   $("#searchByCategory").on("click", function() {[m
-     loadCategories();[m
-     $("#categories").show();[m
-[1mdiff --git a/static/index.html b/static/index.html[m
-[1mindex 5cb243a..db5826a 100644[m
-[1m--- a/static/index.html[m
-[1m+++ b/static/index.html[m
-[36m@@ -6,6 +6,8 @@[m
- 		</script>[m
- 		<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js">[m
- 		</script>[m
-[32m+[m		[32m<script src="./textFit.min.js">[m[41m[m
-[32m+[m		[32m</script>[m[41m[m
- 		<script id="categories-template" type="text/x-handlebars-template">[m
-       {{#each categories}}[m
-        <h4 class="categoryLink">{{ name }}</h4>[m
-[36m@@ -65,7 +67,7 @@[m
- 		</script>[m
- 	</head>[m
- 	<body>[m
-[31m-		<div class="header">[m
-[32m+[m		[32m<div class="header" id="header">[m[41m[m
-       <h1>Social Impact Investigator</h1>[m
- 		</div>[m
- 		<div id="search-all">[m
-[1mdiff --git a/static/style.css b/static/style.css[m
-[1mindex 24d08b0..6f77dcb 100644[m
-[1m--- a/static/style.css[m
-[1m+++ b/static/style.css[m
-[36m@@ -1,4 +1,4 @@[m
-[31m-::-webkit-scrollbar{width:5px;height:9px}::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment{display:block;height:0;background-color:transparent}::-webkit-scrollbar-track-piece{background-color:#fafafa;-webkit-border-radius:0;-webkit-border-bottom-right-radius:8px;-webkit-border-bottom-left-radius:8px}::-webkit-scrollbar-thumb:vertical{height:50px;background-color:rgba(100,100,100,0.5);-webkit-border-radius:8px}::-webkit-scrollbar-thumb:horizontal{width:50px;background-color:rgba(100,100,100,0.5);-webkit-border-radius:8px}.header{background-color:#000;margin:auto;height:12%;margin-top:0;padding-top:0;box-shadow:2px 2px 2px #555}body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;margin:0;padding:0;background-image:url('crossword.png');overflow-x:hidden;}.search{margin:auto;margin-top:15em;width:70%}#text-box{margin:0;padding:0;width:82%;height:2.4em;border:2px solid rgba(71,125,158,0.9);padding-left:2em;border-top-left-radius:2px;border-bottom-left-radius:2px;border-right:0}#sub-button{border-top-right-radius:2px;border-bottom-right-radius:2px;border:1px solid rgba(68,85,77,0.9);background-color:rgba(164,182,174,0.9);margin:0;height:2.4em;padding:0;width:18%}#sub-button:hover{background-color:rgba(156,171,201,0.9)}#footer{background-color:#dddbf0;position:absolute;bottom:0;margin-bottom:0;padding-bottom:0;height:3em;width:100%}#under_search{color:#777;width:69%;margin-left:auto;margin-right:auto}#results{display:none;background-color:#fff;height:auto;width:70%;margin:auto;margin-top:5;overflow-y:scroll;height:3em}#both{width:100%;padding-top:5px}#both div{display:inline-block;margin-bottom:10px;}#social{width:48%;margin:0;border-left:1px solid black;padding-left:1em;float:right;clear:none;}#financial{padding-left:2px;margin:0;float:left;clear:none;width:48%;}#info{padding-left:2px}[m
-[32m+[m[32m::-webkit-scrollbar{width:5px;height:9px}::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment{display:block;height:0;background-color:transparent}::-webkit-scrollbar-track-piece{background-color:#fafafa;-webkit-border-radius:0;-webkit-border-bottom-right-radius:8px;-webkit-border-bottom-left-radius:8px}::-webkit-scrollbar-thumb:vertical{height:50px;background-color:rgba(100,100,100,0.5);-webkit-border-radius:8px}::-webkit-scrollbar-thumb:horizontal{width:50px;background-color:rgba(100,100,100,0.5);-webkit-border-radius:8px}.header{background-color:#000;margin:auto;height:12%;margin-top:0;padding-top:0;box-shadow:2px 2px 2px #555}body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;margin:0;padding:0;background-image:url('crossword.png');overflow-x:hidden;}.search{margin:auto;margin-top:15em;width:70%}#text-box{margin:0;padding:0;width:82%;height:2.4em;border:2px solid rgba(71,125,158,0.9);padding-left:2em;border-top-left-radius:2px;border-bottom-left-radius:2px;border-right:0}#sub-button{border-top-right-radius:2px;border-bottom-right-radius:2px;border:1px solid rgba(68,85,77,0.9);background-color:rgba(164,182,174,0.9);margin:0;height:2.4em;padding:0;width:18%}#sub-button:hover{background-color:rgba(156,171,201,0.9)}#footer{background-color:#dddbf0;position:absolute;bottom:0;margin-bottom:0;padding-bottom:0;height:2em;width:100%}#under_search{color:#777;width:69%;margin-left:auto;margin-right:auto}#results{display:none;background-color:#fff;height:auto;width:70%;margin:auto;margin-top:5;overflow-y:scroll;height:3em}#both{width:100%;padding-top:5px}#both div{display:inline-block;margin-bottom:10px;}#social{width:48%;margin:0;border-left:1px solid black;padding-left:1%;float:right;clear:none;}#financial{padding-left:1%;margin:0;float:left;clear:none;width:48%;}#info{padding-left:2px}[m
- [m
- #categories {[m
-   display: none;[m
-[36m@@ -23,7 +23,7 @@[m
- [m
- #footer {[m
-   padding-left: 15.5%;[m
-[31m-  padding-top: 1em;[m
-[32m+[m[32m  padding-top: 0.75em;[m
- }[m
- [m
- .stocksChart {[m

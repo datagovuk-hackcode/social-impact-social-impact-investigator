@@ -2,6 +2,7 @@
 
 require "nokogiri"
 require "open-uri"
+require "open-uri/cached"
 
 def category_to_slug(category)
   category.gsub! "&", "and"
@@ -60,6 +61,8 @@ class Glassdoor
 
       datum
     end
+
+    puts "csr done"
 
     data
   end

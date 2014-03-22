@@ -1,0 +1,16 @@
+wegreen:
+  name: wegreen
+  values:
+    total: total source count
+
+
+women_on_board:
+  name: 2020 women on boards
+  values:
+    percentage: The percentage of women on U.S. company boards
+
+carbon_disclosure:
+  name: Carbon Disclosure Project 2011 Full Data
+  values:
+    score: Carbon disclosure score
+    band: Carbon performance band

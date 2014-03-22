@@ -1,6 +1,8 @@
-require "./company.rb"
-require "./category.rb"
 require "grape"
+require "./csrhub_company.rb"
+require "./category.rb"
+
+$api_root = "http://socialimpact.harryrickards.com/"
 
 module SocialImpact
   class API < Grape::API
@@ -8,6 +10,7 @@ module SocialImpact
 
     before do
       header "Access-Control-Allow-Origin", "*"
+      $api_root = "http://#{env['HTTP_HOST']}"
     end
 
     resource :companies do
@@ -19,7 +22,8 @@ module SocialImpact
         get do
           name = params[:name]
           name.gsub! /[^a-zA-Z]/, " "
-          Company.info name, params[:name].capitalize
+          company = CSRHubCompany.new name: name
+          company.resp
         end
       end
     end
@@ -33,9 +37,18 @@ module SocialImpact
       desc "Get a list of companies for a certain category"
       route_param :name do
         get do
-          Category.companies(params[:name])
+          CSRHubCompany.in_category params[:name]
         end
+      end
     end
+
+    resource :subcategories do
+      desc "Get a list of subcategories for a certain category"
+      route_param :name do
+        get do
+          Category.subcategories_of params[:name]
+        end
+      end
     end
   end
 end

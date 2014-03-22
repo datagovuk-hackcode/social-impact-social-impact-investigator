@@ -5,3 +5,8 @@ class Float
   end
 end
 
+# Cache JSON
+def get_cached url
+  resp = open(url).read
+  JSON.parse resp
+end

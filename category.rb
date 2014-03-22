@@ -1,30 +1,45 @@
-require "mongo"
-include Mongo
+require "open-uri/cached"
 
-COLL = DB["women_board_members"]
+INDUSTRY_GROUPS_URL = "http://www.csrhub.com/CSR_industry_ratings/"
+INDUSTRY_SUBGROUPS_URL = "http://www.csrhub.com/industry_group/"
+
 
 class Category
-  def initialize(params)
-    @name = params[:name].split.map { |w| w.capitalize }.join(" ")
+  def initialize name
+    @name = name
+    @slug = name.gsub("&", "and").gsub(" ", "-")
+  end
+
+  def subcategories
+    page = Nokogiri::HTML open("#{INDUSTRY_SUBGROUPS_URL}/#{URI.escape @slug}")
+    sc = Category.parse_results page
+    sc.map do |subcategory|
+      {
+        name: subcategory,
+        companies: $api_root + "/api/categories/#{URI.escape subcategory}"
+      }
+    end
+  end
+
+  def self.subcategories_of name
+    c = Category.new name
+    c.subcategories
   end
 
   def self.all
-    COLL.find({}, {fields:["sector"]}).map { |r| r["sector"] }.uniq.reject(&:nil?).reject(&:empty?)
-  end
-
-  def self.companies(name)
-    category = Category.new name: name
-    category.companies
-  end
-
-  def companies
-    names = COLL.find({"sector"=>@name}).map { |r| r["title"] }.uniq.reject(&:nil?).reject(&:empty?)
-    names.map do |name|
-      name.gsub! /,? Inc\.?$/, ""
+    page = Nokogiri::HTML open(INDUSTRY_GROUPS_URL)
+    categories = parse_results page
+    categories.map do |category|
       {
-        name: name,
-        url: "/api/companies/#{URI.escape name.gsub(/[^a-zA-Z ]/, "")}"
+        name: category,
+        companies: $api_root + "/api/categories/#{URI.escape category}",
+        subcategories: $api_root + "/api/subcategories/#{URI.escape category}"
       }
     end
+  end
+
+  protected
+  def self.parse_results page
+    page.xpath("//td[@class='datasource active']//text()").map(&:text)
   end
 end
