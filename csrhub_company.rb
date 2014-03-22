@@ -7,12 +7,15 @@ require 'yaml'
 require_relative 'libs'
 require_relative 'yahoo_company'
 require_relative 'glassdoor'
+require_relative 'mission_dump'
+
+HASH_FILES = ["csrhub_company.rb", "csrhub.yml"]
 
 require 'mongo'
 include Mongo
 $mongo = MongoClient.new("localhost", 27017)
 $db = $mongo["social_impact"]
-filehash= Digest::MD5.hexdigest(File.read("csrhub_company.rb"))
+filehash= Digest::MD5.hexdigest(HASH_FILES.map { |f| File.read(f) }.join("\n"))
 $coll = $db["csrhub_#{filehash}"]
 $coll.create_index "search"
 
@@ -24,7 +27,7 @@ DATASOURCES = YAML.load_file 'csrhub.yml'
 CONFIG = YAML.load_file 'config.yml'
 API_KEY = CONFIG["CSRHUB_API_KEY"]
 
-API_FIELDS = %w{search name website csrsite page ratings address basic_ratings special_issues financial reviews} + DATASOURCES.keys
+API_FIELDS = %w{search name website csrsite page ratings address basic_ratings special_issues financial reviews mission_statement mission_statement_investigator mission_statement_proof news_sources} + DATASOURCES.keys
 
 class CSRHubCompany
   attr_accessor :data, :resp
@@ -39,10 +42,10 @@ class CSRHubCompany
       search
 
       # TODO In parallel below
-      datas = Parallel.map([self.method(:get_details), self.method(:get_data_values), self.method(:get_financial_details), self.method(:get_reviews)]) do |f|
+      datas = Parallel.map([self.method(:get_details), self.method(:get_data_values), self.method(:get_financial_details), self.method(:get_reviews), self.method(:get_missiondump_data)]) do |f|
         f.call
       end
-      datas.each { |data| @data.merge! data }
+      datas.each { |data| @data.merge! data unless data.nil? }
 
       $coll.insert(@data)
       puts "Saving"
@@ -112,7 +115,7 @@ class CSRHubCompany
 
     base = "value/company:#{@alias}"
     DATASOURCES.each do |datasource_slug, info|
-      final_data[datasource_slug] = {} unless final_data.include? datasource_slug
+      final_data[datasource_slug] = {name: info["name"]} unless final_data.include? datasource_slug
       datasource = info["name"]
       elements = info["values"]
 
@@ -120,7 +123,7 @@ class CSRHubCompany
         url = CSRHubCompany.build_api_url "value/company:#{@alias}:datasource:#{URI.escape datasource}:element:#{URI.escape element}"
         puts url
         data = get_cached url
-        final_data[datasource_slug][slug.to_s] = data["Value"]
+        final_data[datasource_slug][slug.to_s] = {name: element, value: data["Value"]}
       end
     end
     puts "dvdone"
@@ -147,6 +150,12 @@ class CSRHubCompany
     {
       "reviews" => Glassdoor.scrape(@name)
     }
+  end
+
+  # Get data from MissionDump API
+  def get_missiondump_data
+    md = MissionDump.new @name
+    md.data
   end
 end
 

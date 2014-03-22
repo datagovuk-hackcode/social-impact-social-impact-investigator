@@ -36,7 +36,8 @@ class Glassdoor
 
     data[:rating] = page.xpath("//div[@class='ratingsSummary margTop5']//span[@class='rating']").first.text.to_f
     data[:num_reviews] = page.xpath("//div[@class='ratingsSummary margTop5']//span[@class='numReviews subtle']//span[@class='count']").first.text.gsub(",", "").to_i
-    data[:ceo_approval] = page.xpath("//span[@class='gdRating']//tt").first.text + "%"
+    ceo_approval = page.xpath("//span[@class='gdRating']//tt").first
+    data[:ceo_approval] = ceo_approval.text + "%" unless ceo_approval.nil?
     data[:recommend_to_a_friend] = page.xpath("//div[@class='recommend padBot5 margBot10 margTop15']//tt").first.text + "%"
 
     ratings = page.xpath("//div[@class='distro padRt15 cf']")

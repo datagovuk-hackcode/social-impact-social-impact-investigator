@@ -1,4 +1,5 @@
 require "grape"
+require "rack/contrib"
 require "./csrhub_company.rb"
 require "./category.rb"
 
@@ -6,6 +7,7 @@ $api_root = "http://socialimpact.harryrickards.com/"
 
 module SocialImpact
   class API < Grape::API
+    use Rack::JSONP
     format :json
 
     before do
