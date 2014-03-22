@@ -33,6 +33,13 @@ API_FIELDS = %w{search name website csrsite page ratings address basic_ratings s
 SEARCH_FILTERS = %w{overall community employees environment governance}
 SEARCH_OPERATORS = %w{equal greater_than less_than greater_than_or_equal less_than_or_equal}
 
+# Methods to get data we can run in parallel after search
+PARALLEL_METHODS = %w{get_details get_data_values get_financial_details get_reviews get_missiondump_data get_wesoc}
+
+# Two levels of caching:
+#   File-based open-uri store indexed by requested URL
+#   Mongo-based overall store indexed by search term & md5 hash of this code
+
 class CSRHubCompany
   attr_accessor :data, :resp
 
@@ -46,7 +53,7 @@ class CSRHubCompany
       search
 
       # TODO In parallel below
-      datas = Parallel.map([self.method(:get_details), self.method(:get_data_values), self.method(:get_financial_details), self.method(:get_reviews), self.method(:get_missiondump_data), self.method(:get_wesoc)]) do |f|
+      datas = Parallel.map(PARALLEL_METHODS.map { |m| self.method(m) }) do |f|
         f.call
       end
       datas.each { |data| @data.merge! data unless data.nil? }

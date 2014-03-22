@@ -21,7 +21,7 @@ module SocialImpact
         elsif data.is_a? String
           datai = data.to_i
           dataf = data.to_f
-          if data == "N/A" or data == "NA" or data == "-" or data == ""
+          if (%w{N/A NA - NR} << "").include? data
             return nil
           elsif datai.to_s == data
             return datai
@@ -90,6 +90,7 @@ module SocialImpact
       end
       get '/:name', requirements: { name: /.*/ } do
         name = params[:name]
+        name = name[0...-1] if name[-1] == "."
         # name.gsub! /[^a-zA-Z]/, " "
         company = CSRHubCompany.new name: name
         format_output company.resp
