@@ -63,7 +63,6 @@ class CSRHubCompany
 
     @resp = {}
     API_FIELDS.each { |f| @resp[f] = @data[f] }
-    @resp = format_output @resp
   end
 
   # Find all companies in a certain category
@@ -218,50 +217,6 @@ class CSRHubCompany
   def get_wesoc
     ws = WeSoc.new @name
     ws.data
-  end
-
-  # TODO Is there not a gem that can do this in a less hackish, less likely
-  # to break way?
-  def format_output data
-    if data.is_a? Hash
-      return Hash[data.map { |k, v| [k, format_output(v)] }]
-    elsif data.is_a? Array
-      return data.map { |x| format_output(x) }
-    elsif data.is_a? String
-      datai = data.to_i
-      dataf = data.to_f
-      if data == "N/A" or data == "NA" or data == "-" or data == ""
-        return nil
-      elsif datai.to_s == data
-        return datai
-      elsif dataf != 0 or data == ("0." + "0"*(data.length<2 ? 0 : data.length-2))
-        return dataf
-      # TODO Ugly!!
-      elsif data =~ /(N\/A|[\d+\-%]*) +- +(N\/A|[\d+\-%\.]*)/i
-        groups = data.match /(N\/A|[\d+\-%]*) +- +(N\/A|[\d+\-%\.]*)/i
-        return format_output [groups[1], groups[2]]
-      elsif data[0] == "+"
-        num = format_output(data[1..-1])
-        if num.is_a? String
-          return data
-        else
-          return num
-        end
-      elsif data[0] == "-"
-        num = format_output(data[1..-1])
-        unless num.is_a? Integer or num.is_a? Float
-          return data
-        else
-          return -num
-        end
-      else
-        data.gsub! /<b>(.*)<\/b>/i, '\1'
-        data.gsub! "&nbsp;", ""
-        return data
-      end
-    else
-      return data
-    end
   end
 end
 

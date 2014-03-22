@@ -10,6 +10,51 @@ module SocialImpact
     use Rack::JSONP
     format :json
 
+    helpers do
+      # TODO Is there not a gem that can do this in a less hackish, less likely
+      # to break way?
+      def format_output data
+        if data.is_a? Hash
+          return Hash[data.map { |k, v| [k, format_output(v)] }]
+        elsif data.is_a? Array
+          return data.map { |x| format_output(x) }
+        elsif data.is_a? String
+          datai = data.to_i
+          dataf = data.to_f
+          if data == "N/A" or data == "NA" or data == "-" or data == ""
+            return nil
+          elsif datai.to_s == data
+            return datai
+          elsif dataf != 0 or data == ("0." + "0"*(data.length<2 ? 0 : data.length-2))
+            return dataf
+          # TODO Ugly!!
+          elsif data =~ /(N\/A|[\d+\-%]*) +- +(N\/A|[\d+\-%\.]*)/i
+            groups = data.match /(N\/A|[\d+\-%]*) +- +(N\/A|[\d+\-%\.]*)/i
+            return format_output [groups[1], groups[2]]
+          elsif data[0] == "+"
+            num = format_output(data[1..-1])
+            if num.is_a? String
+              return data
+            else
+              return num
+            end
+          elsif data[0] == "-"
+            num = format_output(data[1..-1])
+            unless num.is_a? Integer or num.is_a? Float
+              return data
+            else
+              return -num
+            end
+          else
+            data.gsub! /<b>(.*)<\/b>/i, '\1'
+            data.gsub! "&nbsp;", ""
+            return data
+          end
+        else
+          return data
+        end
+      end
+    end
     before do
       header "Access-Control-Allow-Origin", "*"
       $api_root = "http://#{env['HTTP_HOST']}"
@@ -18,12 +63,12 @@ module SocialImpact
     resource :companies do
       desc "See possible search filters."
       get '/search' do
-        CSRHubCompany.search_filters
+        format_output CSRHubCompany.search_filters
       end
 
       desc "See possible search operators."
       get '/search/:filter' do
-        CSRHubCompany.search_operators params[:filter]
+        format_output CSRHubCompany.search_operators(params[:filter])
       end
 
       desc "Search for companies."
@@ -37,7 +82,7 @@ module SocialImpact
             value: value
           }
         end
-        CSRHubCompany.search filters
+        format_output CSRHubCompany.search(filters)
       end
 
       desc "Return info on a company."
@@ -48,20 +93,20 @@ module SocialImpact
         name = params[:name]
         # name.gsub! /[^a-zA-Z]/, " "
         company = CSRHubCompany.new name: name
-        company.resp
+        format_output company.resp
       end
     end
 
     resource :categories do
       desc "View a list of all categories."
       get do
-        Category.all
+        format_output Category.all
       end
 
       desc "Get a list of companies for a certain category"
       route_param :name do
         get do
-          CSRHubCompany.in_category params[:name]
+          format_output CSRHubCompany.in_category(params[:name])
         end
       end
     end
@@ -70,7 +115,7 @@ module SocialImpact
       desc "Get a list of subcategories for a certain category"
       route_param :name do
         get do
-          Category.subcategories_of params[:name]
+          format_output Category.subcategories_of(params[:name])
         end
       end
     end
