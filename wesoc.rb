@@ -8,6 +8,9 @@ class WeSoc
   end
 
   def data
-    get_cached "#{WESOC_URL}/#{URI.escape @name}"
+    name = @name.gsub "/", ""
+    name = @name.gsub ".", " "
+    puts "#{WESOC_URL}/#{URI.escape name}"
+    get_cached "#{WESOC_URL}/#{URI.escape name}"
   end
 end

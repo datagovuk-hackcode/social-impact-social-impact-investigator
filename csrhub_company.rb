@@ -2,6 +2,7 @@ require 'open-uri/cached'
 require 'json'
 require 'babosa'
 require 'parallel'
+require 'cgi'
 require 'yaml'
 
 require_relative 'libs'
@@ -52,8 +53,8 @@ class CSRHubCompany
 
       search
 
-      # TODO In parallel below
       datas = Parallel.map(PARALLEL_METHODS.map { |m| self.method(m) }) do |f|
+      # datas = PARALLEL_METHODS.map { |m| self.method(m) }.map do |f|
         f.call
       end
       datas.each { |data| @data.merge! data unless data.nil? }
@@ -150,7 +151,8 @@ class CSRHubCompany
   # CSRHub API search url
   def search_url
     unless @name.nil?
-      CSRHubCompany.build_api_url "search/name:#{URI.escape @name}"
+      name = @name.gsub "/", ""
+      CSRHubCompany.build_api_url "search/name:#{URI.escape name}"
     else
       raise CSRHubSearchException
     end

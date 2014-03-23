@@ -104,10 +104,8 @@ module SocialImpact
       end
 
       desc "Get a list of companies for a certain category"
-      route_param :name do
-        get do
-          format_output CSRHubCompany.in_category(params[:name])
-        end
+      get '/:name', requirements: { name: /.*/ } do
+        format_output CSRHubCompany.in_category(params[:name])
       end
     end
 

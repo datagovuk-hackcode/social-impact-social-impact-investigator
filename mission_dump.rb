@@ -12,6 +12,7 @@ class MissionDump
 
   protected
   def search_url
-    "#{MD_BASE_URL}/search/#{URI.escape @name}.json"
+    name = @name.gsub "/", ""
+    "#{MD_BASE_URL}/search/#{URI.escape name}.json"
   end
 end

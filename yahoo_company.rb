@@ -29,6 +29,6 @@ class YahooCompany
     query = "select * from yahoo.finance.quotes where symbol in ('#{@ticker}')"
     url = "#{DETAILS_URL}?q=#{URI.encode query}&format=json&env=http://datatables.org/alltables.env"
     data = get_cached url
-    @data = data["query"]["results"]["quote"]
+    @data = data["query"]["results"]["quote"] unless data["query"]["results"].nil? or data["query"]["results"].empty?
   end
 end
