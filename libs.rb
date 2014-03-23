@@ -8,5 +8,6 @@ end
 # Cache JSON
 def get_cached url
   resp = open(url).read
+  return {} if resp.empty? 
   JSON.parse resp
 end

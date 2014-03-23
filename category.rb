@@ -7,7 +7,7 @@ INDUSTRY_SUBGROUPS_URL = "http://www.csrhub.com/industry_group/"
 class Category
   def initialize name
     @name = name
-    @slug = name.gsub("&", "and").gsub(" ", "-")
+    @slug = name.gsub("&", "and").gsub(" ", "-").gsub(",", "")
   end
 
   def subcategories

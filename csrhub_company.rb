@@ -10,6 +10,7 @@ require_relative 'yahoo_company'
 require_relative 'glassdoor'
 require_relative 'mission_dump'
 require_relative 'wesoc'
+require_relative 'social_mediocracy'
 
 HASH_FILES = ["csrhub_company.rb", "csrhub.yml"]
 
@@ -28,14 +29,14 @@ DATASOURCES = YAML.load_file 'csrhub.yml'
 CONFIG = YAML.load_file 'config.yml'
 API_KEY = CONFIG["CSRHUB_API_KEY"]
 
-API_FIELDS = %w{search name website csrsite page ratings address basic_ratings special_issues financial reviews mission_statement mission_statement_investigator mission_statement_proof news_sources twitter} + DATASOURCES.keys
+API_FIELDS = %w{search name website csrsite page ratings address basic_ratings special_issues financial reviews mission_statement mission_statement_investigator mission_statement_proof news_sources twitter industries social industry_average last_updated} + DATASOURCES.keys
 
 # SEARCH_FILTERS = %w{overall community employees environment governance board product} + ["community dev & philanthropy", "compensation & benefits", "diversity & labor rights", "energy & climate change", "environment policy & reporting", "human rights & supply chain", "leadership ethics", "resource management", "training health & safety", "transparency & reporting"]
 SEARCH_FILTERS = %w{overall community employees environment governance}
 SEARCH_OPERATORS = %w{equal greater_than less_than greater_than_or_equal less_than_or_equal}
 
 # Methods to get data we can run in parallel after search
-PARALLEL_METHODS = %w{get_details get_data_values get_financial_details get_reviews get_missiondump_data get_wesoc}
+PARALLEL_METHODS = %w{get_details get_data_values get_financial_details get_reviews get_missiondump_data get_wesoc get_social_mediocracy industry_average}
 
 # Two levels of caching:
 #   File-based open-uri store indexed by requested URL
@@ -53,13 +54,22 @@ class CSRHubCompany
 
       search
 
-      datas = Parallel.map(PARALLEL_METHODS.map { |m| self.method(m) }) do |f|
-      # datas = PARALLEL_METHODS.map { |m| self.method(m) }.map do |f|
+      results = $db["companies"].find({"name" => @tag})
+      @data["industries"] = results.map do |result|
+        {
+          industry: result["category"],
+          subindustry: result["subcategory"]
+        }
+      end
+
+      datas = Parallel.map(PARALLEL_METHODS.map { |m| self.method(m) }, :in_processes=> PARALLEL_METHODS.length) do |f|
         f.call
       end
       datas.each { |data| @data.merge! data unless data.nil? }
 
       @data["name"] = @name if @data["name"].nil?
+
+      @data["last_updated"] = Time.now
 
       $coll.insert(@data)
       puts "Saving"
@@ -144,6 +154,7 @@ class CSRHubCompany
     company = data["companies"].first
     return {} if company.nil?
     @alias = company["alias"]
+    @tag = company["name"]
 
     @data.merge! company
   end
@@ -226,6 +237,25 @@ class CSRHubCompany
   def get_wesoc
     ws = WeSoc.new @name
     ws.data
+  end
+
+  # Twitter/FB
+  def get_social_mediocracy
+    sm = SocialMediocracy.new @name
+    {
+      social: sm.data
+    }
+  end
+
+  # Industry average ratings
+  def industry_average
+    averages = @data["industries"].map do |d|
+      resp = get_cached CSRHubCompany.build_api_url("value/average:industry:#{URI.escape d[:subindustry]}")
+      d.merge(value: resp.values.first)
+    end
+    {
+      industry_average: averages
+    }
   end
 end
 
