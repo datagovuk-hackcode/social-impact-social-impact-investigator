@@ -12,7 +12,7 @@ require_relative 'mission_dump'
 require_relative 'wesoc'
 require_relative 'social_mediocracy'
 
-HASH_FILES = ["csrhub_company.rb", "csrhub.yml"]
+HASH_FILES = ["csrhub_company.rb", "csrhub.yml", "yahoo_company.rb"]
 
 require 'mongo'
 include Mongo
@@ -79,6 +79,10 @@ class CSRHubCompany
       @data.delete "_id"
     end
 
+    # Manual fix for women on board
+    wob = @data["women_on_board"]["percentage"][:value]
+    @data["women_on_board"]["percentage"][:value] = (wob.to_f * 100).to_s + "%" unless wob.nil?
+
     @resp = {}
     API_FIELDS.each { |f| @resp[f] = @data[f] }
   end
@@ -100,22 +104,38 @@ class CSRHubCompany
     end
   end
 
+  def self.parse_operator operator
+    case operator.to_sym
+    when :greater_than
+      "$gt"
+    when :less_than
+      "$lt"
+    when :greater_than_or_equal
+      "$gte"
+    when :less_than_or_equal
+      "$lte"
+    end
+  end
+
   # Search all companies
   def self.search(filters)
-    filter_string = []
+    query = {}
     filters.each do |filter|
       rating = filter[:filter]
       rating.gsub! "&", "and"
       rating.gsub! " ", "-"
 
-      filter_string << "#{rating}:#{filter[:operator]}:#{filter[:value]}"
-    end
-    filter_string = filter_string.join ":"
+      q = if filter[:operator].to_sym == :equal
+            filter[:value].to_i
+          else
+            { parse_operator(filter[:operator]) => filter[:value].to_i}
+          end
 
-    # Proxy straight through to CSRHub
-    puts build_api_url("search/#{filter_string}").inspect
-    results = get_cached build_api_url("search/#{filter_string}")
-    results["companies"].map do |company|
+      query["ratings.#{rating}"] = q
+    end
+    results = $db["companies"].find(query)
+
+    results.limit(100).map do |company|
       {
         name: company["name"],
         website: company["website"],

@@ -1,24 +1,8 @@
-::-webkit-scrollbar{width:5px;height:9px}::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment{display:block;height:0;background-color:transparent}::-webkit-scrollbar-track-piece{background-color:#fafafa;-webkit-border-radius:0;-webkit-border-bottom-right-radius:8px;-webkit-border-bottom-left-radius:8px}::-webkit-scrollbar-thumb:vertical{height:50px;background-color:rgba(100,100,100,0.5);-webkit-border-radius:8px}::-webkit-scrollbar-thumb:horizontal{width:50px;background-color:rgba(100,100,100,0.5);-webkit-border-radius:8px}.header{background-color:#000;margin:auto;height:12%;margin-top:0;padding-top:0;box-shadow:2px 2px 2px #555}body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;margin:0;padding:0;background-image:url('crossword.png');overflow-x:hidden;}.search{margin:auto;margin-top:15em;width:70%}#text-box{margin:0;padding:0;width:82%;height:2.4em;border:2px solid rgba(71,125,158,0.9);padding-left:2em;border-top-left-radius:2px;border-bottom-left-radius:2px;border-right:0}#sub-button{border-top-right-radius:2px;border-bottom-right-radius:2px;border:1px solid rgba(68,85,77,0.9);background-color:rgba(164,182,174,0.9);margin:0;height:2.4em;padding:0;width:18%}#sub-button:hover{background-color:rgba(156,171,201,0.9)}#footer{background-color:#dddbf0;position:absolute;bottom:0;margin-bottom:0;padding-bottom:0;height:2em;width:100%}#under_search{color:#777;width:69%;margin-left:auto;margin-right:auto}#results{display:none;background-color:#fff;height:auto;width:70%;margin:auto;margin-top:5;overflow-y:scroll;height:3em}#both{width:100%;padding-top:5px}#both div{display:inline-block;margin-bottom:10px;}#social{width:48%;margin:0;border-left:1px solid black;padding-left:1%;float:right;clear:none;}#financial{padding-left:1%;margin:0;float:left;clear:none;width:48%;}#info{padding-left:2px}
-
-#categories {
-  display: none;
-}
-
-#searchByCategory {
-  color: #777;
-  text-decoration: none;
-}
-
-#categoriesContainer {
-  margin-left: auto;
-  margin-right: auto;
-  width: 69%;
-}
+::-webkit-scrollbar{width:5px;height:9px;background-color:rgba(221,219,240,0.2)}::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment{display:block;height:0;background-color:transparent}::-webkit-scrollbar-track-piece{background-color:rgba(255,255,255,0.1);-webkit-border-radius:0;-webkit-border-bottom-right-radius:8px;-webkit-border-bottom-left-radius:8px}::-webkit-scrollbar-thumb:vertical{height:50px;background-color:rgba(100,100,100,0.5);-webkit-border-radius:8px}::-webkit-scrollbar-thumb:horizontal{width:50px;background-color:rgba(100,100,100,0.5);-webkit-border-radius:8px}.header{background-color:#000;margin:auto;color:#fff;text-align:center;font-size:16px;height:13%;margin-top:0;padding-top:0;box-shadow:2px 2px 2px #555}#more{float:left;height:80%;margin-left:20px;margin-top:2px}#categories{width:20%;float:left;background-color:rgba(221,219,240,0.2);color:#000;z-index:1;height:100%;min-width:18em;}.active{height:2.1em;border:1px solid black}.inactive{height:2.1em}#categories img{float:right;height:2em}#first{margin-top:5px}#categories div p1{height:2em;margin-left:10px;width:80%;float:left}.industries{overflow-y:scroll;height:50%;overflow-x:hidden;width:100%}.industries form{float:left}.industries form input{margin-left:10px}#charts{width:100%;height:10%}#charts form{width:100%}#charts p1{margin-left:10px}body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;margin:0;padding:0;background-image:url('crossword.png')}.search{margin:auto;margin-top:15em;width:70%}#search-name{margin:0;padding:0;width:82%;height:2.4em;border:2px solid rgba(71,125,158,0.9);padding-left:2em;border-top-left-radius:2px;border-bottom-left-radius:2px;border-right:0}#sub-button{border-top-right-radius:2px;border-bottom-right-radius:2px;border:1px solid rgba(68,85,77,0.9);background-color:rgba(164,182,174,0.9);margin:0;height:2.4em;padding:0;width:18%}#sub-button:hover{background-color:rgba(156,171,201,0.9)}#footer{background-color:#dddbf0;position:absolute;bottom:0;margin-bottom:0;padding-bottom:0;height:3em;width:100%}#under_search{color:#777;width:69%;margin-left:auto;margin-right:auto}##info{padding-left:2px}
 
 .header {
   color: white;
   padding-top: 0.15em;
-  text-align: center;
 }
 
 #footer {
@@ -28,8 +12,6 @@
 
 .stocksChart {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 #disqus_thread {
@@ -42,4 +24,100 @@
 
 body {
   overflow-y: hidden;
+}
+
+#container {
+  height: 100%;
+  float: right;
+}
+
+#results {
+  padding: 15;
+  width: 100%;
+  height: 75%;
+  overflow-y: scroll;
+}
+
+iframe[seamless]{
+  background-color: transparent;
+  border: 0px none transparent;
+  padding: 0px;
+  overflow: hidden;
+}
+
+ul.view-links {
+  list-style-type: none;
+  margin: none;
+  padding: none;
+}
+
+ul.view-links li {
+  display: inline;
+  padding: 5px;
+}
+
+a.selected {
+  font-weight: bold;
+}
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}
+
+#left {
+  width: 49%;
+  float: left;
+  clear: none;
+}
+
+#right {
+  width: 49%;
+  float: right;
+  clear: none;
+}
+
+#legend{
+    height: 400px;
+    width: 400px;
+    background-color: hsla(244, 40%, 90%, 0.2);
+    color: #000;
+    font-size: 1.5em;
+    position: relative;
+    left: 0px;
+    top: -400px;
+    z-index: 1000;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+#legend p2{
+    font-size: 0.8em;
+}
+#legend p1{
+    color: #7D4F6D;
+    background-color: #7D4F6D;
+}
+#legend p3{
+    color: #C7604C;
+    background-color: #C7604C;
+}
+#legend p5{
+    color: #69D2E7;
+    background-color: #69D2E7;
+}
+#legend p7{
+    color: #9D9B7F;
+    background-color: #9D9B7F;
+}
+
+#chart {
+  margin-top: 15px;
+  width: 400;
+  height: 400;
+}
+
+#more {
 }

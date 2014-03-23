@@ -1,94 +1,214 @@
 <html>
 	<head>
-		<script src="//code.jquery.com/jquery-1.10.2.min.js">
-		</script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js">
-		</script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js">
-		</script>
-		<script src="./textFit.min.js">
-		</script>
-		<script id="categories-template" type="text/x-handlebars-template">
-      {{#each categories}}
-       <h4 class="categoryLink">{{ name }}</h4>
-      {{/each}}
-    </script>
-		<script id="results-template" type="text/x-handlebars-template">
-			<img src="{{stocks.stocks_chart}}" class="stocksChart">
-			<div id="info"> {{csrhub.description}} </div>
-			<div id="both">
-				<div id="financial">
-					<h2>Financial Data Score: {{financial_score}} </h2> 
-					<h3>Share price (USD): {{stocks.close}} </h3>
-					<h3>Dividend Yield: {{stocks.dividend_yield}} </h3>
-					<h3>Lowest in last year: {{stocks.low_52_weeks}} </h3>
-					<h3>Highest in last year: {{stocks.high_52_weeks}} </h3>
-				</div>
-				<div id="social"> 
-					<h2>Social Data Score: {{social_impact_score}} </h2>
-					<h3>Wegreen Score: {{wegreen.score}} </h3>
-					<h3>Women Board Members: {{women_board_members.percentage_of_women}} </h3>
-					<h3>Employee rating: {{glassdoor.rating}}</h3>
-					<h3>CSRhub rating: {{csrhub.ratings.average.overall}}</h3>
-          <h3>Reputability ranking (out of 250): {{most_reputable.rank}}</h3>
-				</div>
-			</div>
-       <div id="disqus_thread"></div>
-        <script type="text/javascript">
-            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-            var disqus_shortname = 'socialimpactinvestigator'; // required: replace example with your forum shortname
+		<script src="./jquery.js"> </script>
+		<script src="./jquery.cookie.js"> </script>
+		<script src="./mustache.js"> </script>
+		<script src="./handlebars.js"> </script>
+		<script src="./js-signals.js"> </script>
+		<script src="./hasher.js"> </script>
+		<script src="./crossroads.js"> </script>
+    <script src="./Chart.js"></script>
+    <script src="./graph.js"></script>
+		<script src="./menu.js"></script>
+		<script src="./app.js"></script>
 
-            /* * * DON'T EDIT BELOW THIS LINE * * */
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <!-- AddThis Smart Layers BEGIN -->
-        <!-- Go to http://www.addthis.com/get/smart-layers to customize -->
-        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52062bf31a721985"></script>
-        <script type="text/javascript">
-          addthis.layers({
-            'theme' : 'transparent',
-            'share' : {
-              'position' : 'left',
-              'numPreferredServices' : 5
-            }   
-          });
-        </script>
-        <!-- AddThis Smart Layers END -->
+    <script id="search-template" type="text/x-handlebars-template">
+      <div id="search-all">
+        <div class="search">
+          <form id="search">
+            <input id="search-name" placeholder="Enter company name:" type="text"></input><input id="sub-button" ahref="#" type="submit"></input>
+          </form>
+          {{> views-selector this }}
+        </div>
+      </div>
+    </script>
+
+    <script id="company-explorer-template" type="text/x-handlebars-template">
+      {{> company-views-selector this }}
+      <iframe seamless="seamless" src="http://atleastimtrying.github.io/social_impact_viz/explorer?category={{category}}&subcategory={{subcategory}}" width="100%" height="100%" />
+    </script>
+
+    <script id="company-compare-template" type="text/x-handlebars-template">
+      {{> company-views-selector this }}
+      <iframe seamless="seamless" src="http://atleastimtrying.github.io/social_impact_viz/compare.html?{{name}}" width="100%" height="100%" />
+    </script>
+
+    <script id="loading-results-template" type="text/x-handlebars-template">
+      {{> company-views-selector this }}
+      <h3>Loading...</h3>
+    </script>
+
+    <script id="loading-explorer-template" type="text/x-handlebars-template">
+      {{> company-views-selector this }}
+      <h3>Loading...</h3>
+    </script>
+
+    <script id="social-template" type="text/x-handlebars-template">
+      <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52062bf31a721985"></script>
+      <script type="text/javascript">
+        addthis.layers({
+          'theme' : 'transparent',
+          'share' : {
+            'position' : 'left',
+            'numPreferredServices' : 5
+          }   
+        });
+      </script>
+    </script>
+
+    <script id="compare-template" type="text/x-handlebars-template">
+      {{> views-selector this }}
+      <iframe seamless="seamless" src="http://atleastimtrying.github.io/social_impact_viz/compare.html" width="100%" height="100%" />
+    </script>
+
+    <script id="explorer-template" type="text/x-handlebars-template">
+      {{> views-selector this }}
+      <iframe seamless="seamless" src="http://atleastimtrying.github.io/social_impact_viz/explorer?category={{category}}" width="100%" height="100%" />
+    </script>
+
+		<script id="results-template" type="text/x-handlebars-template">
+      {{> company-views-selector }}
+      <div id="results">
+        <div id="chart">
+          <canvas id="ratings-chart" width="400" height="400"></canvas>
+        </div>
+        <img src="{{financial.chart}}" class="stocksChart">
+        <div id="both">
+          <div id="left">
+            <div id="social">
+              <h2>Financial</h2>
+              <h4>Share price (USD): {{financial.PreviousClose}} </h4>
+              <h4>Dividend Yield: {{financial.DividendYield}} </h4>
+              <h4>Lowest in last year: {{financial.YearLow}} </h4>
+              <h4>Highest in last year: {{financial.YearHigh}} </h4>
+            </div>
+            <div id="social_media">
+              <h2>Social Media</h2>
+              <h4>Public sentiment: <span class="positive">{{twitter.overall_feeling.positive_count}}</span> / <span class="negative">{{twitter.overall_feeling.negative_count}}</span></h4>
+            </div>
+          </div>
+          <div id="right">
+            <div id="financial">
+              <h2>Social</h2>
+              <h4>Overall: {{basic_ratings.overall}}</h4>
+              <h4>Community: {{basic_ratings.community}}</h4>
+              <h4>Employees: {{basic_ratings.employees}}</h4>
+              <h4>Environment: {{basic_ratings.environment}}</h4>
+              <h4>Governance: {{basic_ratings.governance}}</h4>
+              <h4>Wegreen Score: {{wegreen.total.value}}</h4>
+              <h4>Women Board Members: {{women_on_board.percentage.value}}</h4>
+              <h4>Employee Reviews: {{reviews.rating}}</h4>
+              <h4>Carbon Rating: {{carbon_disclosure.band.value}}</h4>
+            </div>
+            <div id="mission_statement">
+              <h2>Mission Statement</h2>
+              {{mission_statement}}
+            </div>
+          </div>
+        </div>
+      </results>
 		</script>
+
+    <script id="results-error-template" type="text/x-handlebars-template">
+      Error, try again.
+    </script>
+
+    <script id="company-views-selector-partial" type="text/x-handlebars-template">
+      <ul class="view-links">
+        <li><a id="company_details_view"{{#equal current "company-results"}}class="selected"{{/equal}}>Details</a></li>
+        <li><a id="company_explorer_view"{{#equal current "company-explorer"}}class="selected"{{/equal}}>Explorer</a></li>
+        <li><a id="company_compare_view"{{#equal current "company-compare"}}class="selected"{{/equal}}>Compare</a></li>
+      </ul>
+    </script>
+
+    <script id="views-selector-partial" type="text/x-handlebars-template">
+      <ul class="view-links">
+        <li><a id="explorer_view"{{#equal current "explorer"}}class="selected"{{/equal}}>Explorer</a></li>
+        <li><a id="compare_view"{{#equal current "compare"}}class="selected"{{/equal}}>Compare</a></li>
+      </ul>
+    </script>
+
+    <script id="sidebar-template" type="text/x-handlebars-template">
+      <div id="categories">
+        <div class = "inactive" id="first">
+          <img class="category" src="NotPinned.png" data-id="1" test>
+          <p1>
+            Environment
+          </p1>
+        </div>
+        <div class = "inactive" id="second">
+          <img class="category" src="NotPinned.png" data-id="2" test>
+          <p1>
+            Employees
+          </p1>
+        </div>
+        <div class = "inactive" id="third">
+          <img class="category" src="NotPinned.png" data-id="3" test>
+          <p1>
+            Community
+          </p1>
+        </div>
+        <div class = "inactive" id="forth">
+          <img class="category" src="NotPinned.png" data-id="4" test>
+          <p1>
+            Governance
+          </p1>
+        </div>
+        <hr>
+        <div class="industries">
+          <h4>Industries:</h4>
+          <form id="categories_form">
+            <input type="checkbox" name="category" value="Agriculture & Mining">Agriculture & Mining<br>
+            <input type="checkbox" name="category" value="Construction & Engineering">Construction & Engineering<br> 
+            <input type="checkbox" name="category" value="Consumer Goods">Consumer Goods <br>
+            <input type="checkbox" name="category" value="Distribution">Distribution <br>
+            <input type="checkbox" name="category" value="Durable Goods">Durable Goods<br>
+            <input type="checkbox" name="category" value="Education & Government">Education & Government <br>
+            <input type="checkbox" name="category" value="Finance & Real Estate">Finance & Real Estate <br>
+            <input type="checkbox" name="category" value="Food, Beverages, & Tobacco">Food, Beverages & Tobacco <br>
+            <input type="checkbox" name="category" value="Healthcare">Healthcare<br>
+            <input type="checkbox" name="category" value="Media">Media<br>
+            <input type="checkbox" name="category" value="Multi-Industry">Multi-Industry<br>
+            <input type="checkbox" name="category" value="Retail">Retail <br>
+            <input type="checkbox" name="category" value="Services">Services<br>
+            <input type="checkbox" name="category" value="Sports & Leisure">Sports & Leisure<br>
+            <input type="checkbox" name="category" value="Technology">Technology<br>
+            <input type="checkbox" name="category" value="Transportation">Transportation<br> 
+            <input type="checkbox" name="category" value="Travel">Travel<br>
+            <input type="checkbox" name="category" value="Utilities & Refining">Utilities & Refining<br>
+          </form>
+        </div>
+        <hr>
+        <div id="charts">
+        <p1>Choose chart type:<p1>
+        <br>
+        <form id="graph-choice">
+          <input type="radio" name="chart" value="polar" checked>Polar</input>
+          <input type="radio" name="chart" value="radar">Radar</input>
+        </form>
+        </div>
+      </div>
+    </script>
+
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<title>
       Social Impact Investigator
 		</title>
-		<script src="app.js">
-		</script>
 	</head>
 	<body>
 		<div class="header" id="header">
-      <h1>Social Impact Investigator</h1>
+      <img id = "more" class = "closed" src="more.png">
+      <h1 id="title">Social Impact Investigator</h1>
 		</div>
-		<div id="search-all">
-			<div class="search">
-        <form id="search">
-          <input id="text-box" placeholder="Enter company name:" type="text"></input><input id="sub-button" ahref="#" type="submit"></input>
-        </form>
-			</div>
-			<p id="under_search">
-      Or <a href="#" id="searchByCategory">search by category...</a>
-			</p>
-      <div id="categoriesContainer">
-        <select id="categories">
-          <option>Select...</option>
-        </select>
+    <div id="main">
+      <div id="container">
       </div>
-		</div>
-		<div id="results">
-		</div>
+    </div>
+    <!--
 		<div id="footer">
       &copy; 2014 Harry Rickards and Vesko Vankov. BSD licensed. See individual <a href="https://github.com/hrickards/social_impact">datasets</a> for data licenses.
 		</div>
+    -->
+    <div id="social"></div>
 	</body>
 </html>

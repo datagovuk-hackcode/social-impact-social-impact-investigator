@@ -14,6 +14,7 @@ class YahooCompany
 
     get_ticker
     get_stocks unless @ticker.nil?
+    @data[:chart] = "http://chart.finance.yahoo.com/z?s=#{@ticker}&t=5y&q=&l=&z=l&a=v&p=s&lang=en-US&region=US"
   end
 
   protected
