@@ -116,7 +116,7 @@ function loadTemplate(templateName, currentPath, data) {
 
 // Load results for a specific company
 function loadCompanyDetails(name, callback) {
-  var url = "http://10.10.63.58:9292/api/companies/" + name;
+  var url = "http://socialimpact.harryrickards.com/api/companies/" + name;
   $.get(url).done(function(data) {
     data['category'] = encodeURIComponent(data['industries'][0]['industry']);
     data['subcategory'] = encodeURIComponent(data['industries'][0]['subindustry']);
