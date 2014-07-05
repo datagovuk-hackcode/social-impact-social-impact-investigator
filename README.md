@@ -1,5 +1,7 @@
 # Social Impact Hack
 
+_[Harry Rickards](http://rckrds.uk), Veselin Vankov ([Twitter](http://www.twitter.com/vesko_ski), [LinkedIn](http://uk.linkedin.com/in/veskoski))_
+
 App to allow potential investors to look at both financial info and social impact info on companies. Written for [Hack for Social Impact](http://rewiredstate.org/hacks/hackforsocialimpact).
 
 **Very** messy code, as it was for a hackathon.
@@ -26,7 +28,7 @@ Companies' social impact data from:
 
  * [WeGreen](http://wegreen.de). Provides a score on overall CSR. We couldn't get access to their API during the hackweekend, so had to use their CSV downloads. `wegreen` in the API.
  * [20% by 2020 Women on Boards Company Directory](http://www.2020wob.com/company-directory). Used for information on the number of women in boards. At the moment, we're just scraping their site. `women_board_members` in the API.
- * [CSRHub](http://www.csrhub.com). Used for their overall CSR information, company description and ticker (e.g., [Apple](http://www.csrhub.com/CSR_and_sustainability_information/Apple-Inc/)). You have to pay for raw data access, so we're just scraping the site. `csrhub`
+ * [CSRHub](http://www.csrhub.com). Used for their overall CSR information, company description and ticker (e.g., [Apple](http://www.csrhub.com/CSR_and_sustainability_information/Apple-Inc/)). You have to pay for raw data access, so we're just scraping the site. `csrhub`. In the second iteration, this dataset was used as the primary CSR dataset.
  * [Glassdoor](http://www.glassdoor.com/) Used for employee reviews of companies. API access seems to be invite-only, so again we're just scraping their site. `lassdoor' in the API.
  * [Vigeo](http://www.vigeo.com/csr-rating-agency/en/how-are-companies-worldwide-performing-against-csr-objectives). Used to check if a company is on their list of the top 100 companies with regards to CSR. Data obtained manually from their PDF. `vigeo' in the API.
  * [CDP S&P 500 Climate Change Report](https://www.cdp.net/CDPResults/CDP-SP500-climate-report-2013.pdf). Used for a carbon score for S&P 500 companies. Data imported manually from their PDF. Data is under `cdp' in the API.
