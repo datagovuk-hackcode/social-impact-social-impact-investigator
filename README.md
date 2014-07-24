@@ -1,6 +1,6 @@
 # Social Impact Hack
 
-_[Harry Rickards](http://rckrds.uk), Veselin Vankov ([Twitter](http://www.twitter.com/vesko_ski), [LinkedIn](http://uk.linkedin.com/in/veskoski))_
+_[Harry Rickards](http://rckrds.uk), Veselin Vankov ([Twitter](http://www.twitter.com/vesko_ski), [LinkedIn](http://uk.linkedin.com/in/veskoski)), [Anders Fisher](http://andersfisher.com), [Matthew Bennett](https://twitter.com/undecisive), Kaelan Fouwels_
 
 App to allow potential investors to look at both financial info and social impact info on companies. Written for [Hack for Social Impact](http://rewiredstate.org/hacks/hackforsocialimpact).
 
